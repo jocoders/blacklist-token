@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import { Ownable } from '@openzeppelin/access/Ownable.sol';
-import { ERC20 } from '@openzeppelin/token/ERC20/ERC20.sol';
+import { Ownable2Step } from '../lib/openzeppelin-contracts/contracts/access/Ownable2Step.sol';
+import { Ownable } from '../lib/openzeppelin-contracts/contracts/access/Ownable.sol';
+import { ERC20 } from '../lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol';
 
 /// @title Blacklist Token Contract
 /// @notice This contract manages a token that can blacklist addresses from transferring or receiving tokens.
 /// @dev This contract extends OpenZeppelin's ERC20 and Ownable contracts.
-contract BlacklistToken is ERC20, Ownable {
+contract BlacklistToken is ERC20, Ownable2Step {
   mapping(address => bool) public blacklist;
 
   /// @notice Initializes the contract with token name and symbol, and sets the owner to the deployer.
