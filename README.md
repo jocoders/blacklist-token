@@ -1,66 +1,88 @@
-## Foundry
+# Blacklist Token
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+## Overview
 
-Foundry consists of:
+`BlacklistToken` is a fungible ERC-20 token implemented on Ethereum, featuring administrative controls that allow specified addresses to be banned from sending and receiving tokens. This functionality is useful for adhering to regulatory requirements and enforcing sanctions.
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+## Features
 
-## Documentation
+- ERC-20 compliance: The token adheres to the standard ERC-20 interface.
+- Blacklisting: Admins can add or remove addresses from a blacklist.
+- Transfer controls: Blacklisted addresses cannot send or receive tokens.
 
-https://book.getfoundry.sh/
+## Technology
+
+The token is implemented using Solidity ^0.8.20 and relies on OpenZeppelin's contracts for standard functionality, including ERC20 and access control.
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js and npm
+- Foundry (for local deployment and testing)
+
+### Installation
+
+1. Install Foundry if it's not already installed:
+   ```bash
+   curl -L https://foundry.paradigm.xyz | bash
+   foundryup
+   ```
+
+2. Clone the repository:
+   ```bash
+   git clone https://github.com/jocoders/blacklist-token.git
+   cd blacklist-token
+   ```
+
+3. Install dependencies:
+   ```bash
+   forge install
+   ```
+
+### Testing
+
+Run tests using Foundry:
+```bash
+forge test
+```
 
 ## Usage
 
-### Build
+### Deploying the Token
 
-```shell
-$ forge build
+Deploy the token to a local blockchain using Foundry:
+```bash
+forge create BlacklistToken --rpc-url http://localhost:8545
 ```
 
-### Test
+### Interacting with the Token
 
-```shell
-$ forge test
+#### Adding to Blacklist
+
+```javascript
+const tx = await token.addToBlacklist("0xADDRESS");
+await tx.wait();
 ```
 
-### Format
+#### Removing from Blacklist
 
-```shell
-$ forge fmt
+```javascript
+const tx = await token.removeFromBlacklist("0xADDRESS");
+await tx.wait();
 ```
 
-### Gas Snapshots
+#### Transferring Tokens
 
-```shell
-$ forge snapshot
+```javascript
+const tx = await token.transfer("0xRECIPIENT", amount);
+await tx.wait();
 ```
 
-### Anvil
+## Contributing
 
-```shell
-$ anvil
-```
+Contributions are welcome! Please fork the repository and open a pull request with your features or fixes.
 
-### Deploy
+## License
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+This project is unlicensed and free for use by anyone.

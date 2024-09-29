@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.13;
+pragma solidity 0.8.20;
 
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
@@ -11,14 +11,7 @@ import {Ownable2Step} from "@openzeppelin/contracts/access/Ownable2Step.sol";
 /// @dev This contract extends ERC20 and Ownable2Step from OpenZeppelin
 contract BlacklistToken is ERC20, Ownable2Step {
     uint256 public constant INITIAL_SUPPLY = 100_000_000 * 1e18;
-
     mapping(address => bool) public blacklist;
-
-    /// @notice Initializes the contract with initial supply and sets the deployer as the initial owner
-    /// @dev The constructor sets the initial supply and calls ERC20 and Ownable constructors
-    constructor() ERC20("BlacklistToken", "BLT") Ownable(msg.sender) {
-        _mint(msg.sender, INITIAL_SUPPLY);
-    }
 
     /// @notice Checks if the addresses involved in a transaction are not blacklisted.
     /// @param from The address sending the tokens.
@@ -27,6 +20,12 @@ contract BlacklistToken is ERC20, Ownable2Step {
         require(!blacklist[from], "Address 'from' is blacklisted");
         require(!blacklist[to], "Address 'to' is blacklisted");
         _;
+    }
+
+    /// @notice Initializes the contract with initial supply and sets the deployer as the initial owner
+    /// @dev The constructor sets the initial supply and calls ERC20 and Ownable constructors
+    constructor() ERC20("BlacklistToken", "BLT") Ownable(msg.sender) {
+        _mint(msg.sender, INITIAL_SUPPLY);
     }
 
     /// @notice Adds an address to the blacklist.
