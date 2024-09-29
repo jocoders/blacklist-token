@@ -12,7 +12,7 @@
 
 ## Technology
 
-The token is implemented using Solidity ^0.8.20 and relies on OpenZeppelin's contracts for standard functionality, including ERC20 and access control.
+The token is implemented using Solidity 0.8.20 and relies on OpenZeppelin's contracts for standard functionality, including ERC20 and access control.
 
 ## Getting Started
 
